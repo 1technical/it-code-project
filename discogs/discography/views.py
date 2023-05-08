@@ -1,7 +1,44 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
+from discography.models import *
 
-@login_required
-def profile_view(request):
-    return render(request, 'discography/profile.html')
 
+class IndexView(ListView):
+    model = Artist
+    template_name = 'discography/index.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная Страница'
+        return context
+
+
+class AlbumListView(ListView):
+    model = Album
+    template_name = 'discography/album_list.html'
+
+    def get_queryset(self):
+        self.slug = get_object_or_404(Artist, slug=self.kwargs["slug"])
+        return Artist.objects.filter(slug=self.slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Список Альбомов'
+        context['artist_list'] = Album.objects.filter(artist__name=self.slug)
+        return context
+
+
+class AlbumDetailView(ListView):
+    model = Track
+    template_name = 'discography/album_detail.html'
+
+    def get_queryset(self):
+        self.slug = get_object_or_404(Album, slug=self.kwargs["slug"])
+        return Album.objects.filter(slug=self.slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Содержание Альбома'
+        context['tracklist_album'] = Track.objects.filter(album__title=self.slug)
+        return context

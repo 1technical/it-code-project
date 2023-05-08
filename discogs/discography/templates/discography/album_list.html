@@ -1,0 +1,10 @@
+<title>{{ title }}</title>
+
+<h1>{{ artist_albums.first.artist }}</h1>
+
+<h2>список альбомов</h2>
+{% for album in artist_list %}
+<ul>
+  <li><a href="{{ album.get_absolute_url }}">{{ album }}</a></li>
+</ul>
+{% endfor %}

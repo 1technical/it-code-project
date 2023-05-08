@@ -1,0 +1,7 @@
+<h2>список артистов</h2>
+
+{% for artist in object_list %}
+<ul>
+  <li><a href="{{ artist.get_absolute_url }}">{{ artist.name }}</a></li>
+</ul>
+{% endfor %}

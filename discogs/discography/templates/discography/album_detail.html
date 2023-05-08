@@ -1,0 +1,9 @@
+<title>{{ title }}</title>
+
+<h1>{{ tracklist_album.first.album}}</h1>
+<h2>список треков</h2>
+{% for track in tracklist_album %}
+<ul>
+  <li>{{ track }}</li>
+</ul>
+{% endfor %}

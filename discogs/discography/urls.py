@@ -1,9 +1,9 @@
 from django.urls import path
+from discography.views import *
 
-from discography.views import profile_view
+urlpatterns = [
+    path('', IndexView.as_view(), name='index'),
+    path('artist/<slug:slug>/', AlbumListView.as_view(), name='album_list'),
+    path('album/<slug:slug>/', AlbumDetailView.as_view(), name='album_detail'),
 
-app_name = 'discography'
-
-# urlpatterns = [
-#     path('artist', artist, name='artist')
-# ]
+]
