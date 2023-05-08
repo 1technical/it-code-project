@@ -1,7 +1,10 @@
-<h1>список артистов</h1>
+{% extends 'discography/base.html' %}
 
-{% for artist in object_list %}
-<ul>
-  <li><a href="{{ artist.get_absolute_url }}">{{ artist.name }}</a></li>
-</ul>
-{% endfor %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+  <article>
+    <h2>Что это?</h2>
+    Тут можно посмотреть информацию о нескольких рандомных музыкальных альбомах
+  </article>
+{% endblock %}

@@ -1,12 +1,14 @@
-<title>{{ title }}</title>
+{% extends 'discography/base.html' %}
 
-<h1>{{ tracklist_album.first.album}} - {{tracklist_album.first.album.year}}</h1>
-{% for genre in tracklist_album.first.album.genre.all %}
-<h2>{{ genre }}</h2>
-{% endfor %}
-<h2>список треков</h2>
-{% for track in tracklist_album %}
-<ul>
-  <li>{{ track }} {{ track.duration }}</li>
-</ul>
-{% endfor %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+<article>
+  <h2 style="text-align:center;">{{ tracklist_album.first.album}} - {{tracklist_album.first.album.year}}</h2>
+  {% for genre in tracklist_album.first.album.genre.all %}
+  {% endfor %}
+  {% for track in tracklist_album %}
+  <ol>{{ track }} {{ track.duration }}</ol>
+  {% endfor %}
+</article>
+{% endblock %}

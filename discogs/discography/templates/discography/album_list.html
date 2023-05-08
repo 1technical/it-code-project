@@ -1,10 +1,14 @@
-<title>{{ title }}</title>
+{% extends 'discography/base.html' %}
 
-<h1>{{ artist_list.first.artist }}</h1>
+{% block title %} {{ title }} {% endblock %}
 
-<h2>список альбомов</h2>
-{% for album in artist_list %}
-<ul>
-  <li><a href="{{ album.get_absolute_url }}">{{ album }}</a></li>
-</ul>
-{% endfor %}
+
+{% block content %}
+<article>
+  {% for album in artist_list %}
+  <ul>
+    <ol><a href="{{ album.get_absolute_url }}">{{ album.year }} - {{ album }}</a></ol>
+  </ul>
+  {% endfor %}
+</article>
+{% endblock %}

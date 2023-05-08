@@ -1,6 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView
 from discography.models import *
 
 
@@ -25,7 +24,9 @@ class AlbumListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список Альбомов'
+        context['object_list'] = Artist.objects.all()
         context['artist_list'] = Album.objects.filter(artist__name=self.slug)
+
         return context
 
 
@@ -39,6 +40,7 @@ class AlbumDetailView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Содержание Альбома'
+        context['title'] = 'Треклист'
+        context['object_list'] = Artist.objects.all()
         context['tracklist_album'] = Track.objects.filter(album__title=self.slug)
         return context
