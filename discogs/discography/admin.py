@@ -20,6 +20,7 @@ class TrackAdmin(admin.ModelAdmin):
     list_display_links = ('album',)
     autocomplete_fields = ('album',)
     ordering = ['album']
+    list_per_page = 15
 
 
 admin.site.register(Artist, ArtistAdmin)
