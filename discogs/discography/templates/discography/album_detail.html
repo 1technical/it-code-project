@@ -3,12 +3,11 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block content %}
-<article>
   <h2 style="text-align:center;">{{ tracklist_album.first.album}} - {{tracklist_album.first.album.year}}</h2>
   {% for genre in tracklist_album.first.album.genre.all %}
   {% endfor %}
   {% for track in tracklist_album %}
   <ol>{{ track }} {{ track.duration }}</ol>
   {% endfor %}
-</article>
+
 {% endblock %}

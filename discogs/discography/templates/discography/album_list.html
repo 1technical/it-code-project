@@ -4,11 +4,9 @@
 
 
 {% block content %}
-<article>
   {% for album in artist_list %}
   <ul>
     <ol><a href="{{ album.get_absolute_url }}">{{ album.year }} - {{ album }}</a></ol>
   </ul>
   {% endfor %}
-</article>
 {% endblock %}
