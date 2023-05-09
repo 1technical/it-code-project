@@ -24,7 +24,7 @@
   <nav>
     {% for artist in object_list %}
     <ul>
-      <ol><a href="{{ artist.get_absolute_url }}">{{ artist.name }}</a></ol>
+      <ol><a href="{{ artist.get_absolute_url }}"><b>{{ artist.name }}</b></a></ol>
     </ul>
     {% endfor %}
   </nav>
