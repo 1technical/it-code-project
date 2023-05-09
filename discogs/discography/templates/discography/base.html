@@ -4,64 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--  <link href="{% static 'discography/css/style.css' %}" rel="stylesheet">-->
+  <link href="{% static 'discography/css/style.css' %}" rel="stylesheet">
   <title>{% block title %} {% endblock %}</title>
-  <style>
-a {
-       text-decoration: none;
-}
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Style the header */
-header {
-  background-color: #666;
-  padding: 30px;
-  text-align: center;
-  font-size: 35px;
-  color: white;
-}
-
-/* Create two columns/boxes that floats next to each other */
-nav {
-  float: left;
-  width: 30%;
-  height: 570px; /* only for demonstration, should be removed */
-  background: #ccc;
-  padding: 20px;
-}
-
-/* Style the list inside the menu */
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-article {
-  float: left;
-  padding: 20px;
-  width: 70%;
-  background-color: #f1f1f1;
-  height: 570px; /* only for demonstration, should be removed */
-}
-
-/* Style the footer */
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 99%;
-  background-color: #777;
-  padding: 20px;
-  text-align: center;
-  color: white;
-}
-}
-  </style>
 </head>
 <body style="background: url({% static 'discography/images/background.gif' %}">
 <header id="header">
@@ -76,7 +20,6 @@ footer {
     </tr>
   </table>
 </header>
-
 <section>
   <nav>
     {% for artist in object_list %}
@@ -85,19 +28,17 @@ footer {
     </ul>
     {% endfor %}
   </nav>
-    <article>
-
-  {% block content %}
-  {% endblock %}
+  <article>
+    {% block content %}
+    {% endblock %}
   </article>
-
 </section>
 <div style="margin-top: 100px;">
-    <footer class="footer">
-        <div style="text-align:center;">
-            <span class="text-muted">2023 год. Учебный проект. В разработке</span>
-        </div>
-    </footer>
+  <footer class="footer">
+    <div style="text-align:center;">
+      <span class="text-muted">2023 год. Учебный проект. В разработке</span>
+    </div>
+  </footer>
 </div>
 </body>
 </html>
