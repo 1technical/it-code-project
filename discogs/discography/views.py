@@ -13,9 +13,14 @@ class IndexView(ListView):
         return context
 
 
-class AlbumListView(ListView):
-    model = Album
-    template_name = 'discography/album_list.html'
+class ArtistListView(ListView):
+    model = Artist
+    template_name = 'discography/artist_list.html'
+
+
+class ArtistProfileListView(ListView):
+    model = Artist
+    template_name = 'discography/artist_profile.html'
 
     def get_queryset(self):
         self.slug = get_object_or_404(Artist, slug=self.kwargs["slug"])
@@ -23,15 +28,14 @@ class AlbumListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Список Альбомов'
-        context['object_list'] = Artist.objects.all()
-        context['artist_list'] = Album.objects.filter(artist__name=self.slug)
-
+        context['title'] = 'Профиль артиста'
+        context['artist'] = Artist.objects.filter(name=self.slug)
+        context['album_list'] = Album.objects.filter(artist__name=self.slug)
         return context
 
 
 class AlbumDetailView(ListView):
-    model = Track
+    model = Album
     template_name = 'discography/album_detail.html'
 
     def get_queryset(self):
@@ -41,6 +45,6 @@ class AlbumDetailView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Треклист'
-        context['object_list'] = Artist.objects.all()
-        context['tracklist_album'] = Track.objects.filter(album__title=self.slug)
+        context['album'] = Album.objects.filter(title=self.slug)
+        context['tracklist'] = Track.objects.filter(album__title=self.slug)
         return context

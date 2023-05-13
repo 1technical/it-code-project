@@ -1,0 +1,27 @@
+{% extends 'discography/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+<h2 style="text-align:center">{{ artist.first.name}}</h2>
+<table style="border-spacing: 20px;">
+    <tbody>
+    <tr>
+        <td><img src="{{ artist.first.photo.url }}" alt="artist" width="350px"></td>
+        <td style="vertical-align: top;">
+            {{ artist.first.profile|linebreaks }}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><h1 style="text-align:center">Альбомы</h1>
+            {% for album in album_list %}
+            <ul>
+                <a href="{{ album.get_absolute_url }}">{{ album.year }} - {{ album }}</a>
+            </ul>
+            {% endfor %}
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+{% endblock %}
