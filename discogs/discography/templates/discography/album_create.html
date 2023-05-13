@@ -1,0 +1,13 @@
+{% extends 'discography/base.html' %}
+
+{% block title %}Добавить Альбом{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center">Добавление Альбома</h2>
+
+<form action="{% url 'album_create' %}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Добавить</button>
+</form>
+{% endblock %}

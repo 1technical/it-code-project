@@ -65,18 +65,18 @@ footer {
                  <a href="{% url 'artist_list' %}">Артисты</a>
             </td>
             <td>
-                Добавить артиста
+                <a href="{% url 'artist_create' %}">Добавить артиста</a>
             </td>
             <td>
-                Добавить альбом
+                <a href="{% url 'album_create' %}">Добавить альбом</a>
             </td>
             <td>
                 Log in
             </td>
             <td style="text-align:right">
-                <form role="search">
-                    <input type="search" placeholder="Search" aria-label="Search">
-                    <button type="submit">Search</button>
+                <form role="search" action="{% url 'artist_list' %}">
+                    <input type="search" placeholder="поиск" aria-label="Search">
+                    <button type="submit">Найти</button>
                 </form>
             </td>
         </tr>
