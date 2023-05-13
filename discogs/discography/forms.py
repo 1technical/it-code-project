@@ -23,3 +23,7 @@ class CreateAlbumForm(forms.ModelForm):
     class Meta:
         model = Album
         fields = ('artist', 'title', 'year', 'genre', 'photo',)
+
+    tracks = forms.ModelMultipleChoiceField(
+        queryset=Track.objects.all()
+    )

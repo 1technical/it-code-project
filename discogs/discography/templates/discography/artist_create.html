@@ -5,10 +5,11 @@
 {% block content %}
 <h2 style="text-align:center">Добавление Артиста</h2>
 
-<form action="{% url 'artist_create' %}" method="post">
+<form action="{% url 'artist_create' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Добавить</button>
+    <table>
+        {{form.as_table}}
+    </table>
 </form>
 
 
