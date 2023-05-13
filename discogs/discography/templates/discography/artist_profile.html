@@ -4,13 +4,16 @@
 
 {% block content %}
 <h2 style="text-align:center">{{ artist.first.name}}</h2>
-
 <table style="border-spacing: 25px;">
     <tbody>
     <tr>
         <td style="vertical-align: center;"><img src="{{ artist.first.photo.url }}" alt="artist" width="350px"></td>
         <td style="vertical-align: top;">
             {{ artist.first.profile|linebreaks }}
+            <form action="{% url 'artist_update' artist.first.slug %}">
+                <input type="submit" value="Обновить профиль"/>
+            </form>
+
             <h2 style="text-align:center">Альбомы</h2>
             {% for album in album_list %}
             <ul>

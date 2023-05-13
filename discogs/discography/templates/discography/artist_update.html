@@ -1,0 +1,17 @@
+{% extends 'discography/base.html' %}
+
+{% block title %}Редактировать Артиста{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center">Обновление Профиля</h2>
+
+<form action="{% url 'artist_update' artist.slug %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <button type="submit">Применить</button>
+</form>
+
+
+{% endblock %}

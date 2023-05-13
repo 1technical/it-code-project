@@ -7,9 +7,9 @@
 
 <form action="{% url 'album_create' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <table>
+    <table style="text-align: left;">
         {{form.as_table}}
     </table>
-    <button type="submit">Добавить</button>
+    <button type="submit" >Добавить</button>
 </form>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 
 from discography import forms
 from discography.forms import CreateArtistForm, CreateAlbumForm, ArtistSearch
@@ -76,4 +76,14 @@ class AlbumCreate(CreateView):
     template_name = 'discography/album_create.html'
     success_url = reverse_lazy('artist_list')
 
+class ArtistUpdate(UpdateView):
+    model = Artist
+    form_class = CreateArtistForm
+    template_name = 'discography/artist_update.html'
+    success_url = reverse_lazy('artist_list')
 
+class AlbumUpdate(UpdateView):
+    model = Artist
+    form_class = CreateAlbumForm
+    template_name = 'discography/artist_update.html'
+    success_url = reverse_lazy('artist_list')

@@ -8,5 +8,7 @@ urlpatterns = [
     path('album/<slug:slug>/', AlbumDetailView.as_view(), name='album_detail'),
     path('artist_create/', ArtistCreate.as_view(), name='artist_create'),
     path('album_create/', AlbumCreate.as_view(), name='album_create'),
+    path('artist_update/<slug:slug>', ArtistUpdate.as_view(), name='artist_update'),
+    path('album_update/<slug:slug>', AlbumUpdate.as_view(), name='album_update'),
 
 ]
