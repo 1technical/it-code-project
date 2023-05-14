@@ -1,0 +1,17 @@
+{% extends 'discography/base.html' %}
+
+{% block title %}Создать Треклист{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center">Создать Треклист</h2>
+
+<form action="{% url 'tracklist_create' album_id=album_id.pk %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <button type="submit">Применить</button>
+</form>
+
+
+{% endblock %}

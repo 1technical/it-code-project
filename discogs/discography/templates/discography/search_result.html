@@ -1,7 +1,7 @@
 {% extends 'discography/base.html' %}
-{% block title %}Список Артистов{% endblock %}
+{% block title %}Поиск{% endblock %}
 {% block content %}
-<h2 style="text-align:center">Список Артистов</h2>
+<h2 style="text-align:center">Результат поиска</h2>
 
 {% for artist in object_list %}
 <table style="padding-left: 50px;">
@@ -14,6 +14,6 @@
     </tr>
     </tbody>
 </table>
-
 {% endfor %}
+
 {% endblock %}

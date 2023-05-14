@@ -8,13 +8,17 @@
 <table>
     <tbody>
     <tr>
-        <td style="vertical-align: top;"><img src="{{ album.first.photo.url }}" alt="cover" width="350px">
+        <td style="vertical-align: top;"><img src="{{ album.first.photo.url }}" alt="cover" height="350px">
 
-<!--            <form action="{% url 'album_update' album.first.slug %}">-->
-<!--                <input type="submit" value="Обновить Альбом"/>-->
-<!--            </form>-->
+            <form action="{% url 'album_update' album.first.slug %}">
+                <input type="submit" value="Обновить Альбом"/>
+            </form>
+            <form action="{% url 'album_delete' album.first.slug %}">
+                <input type="submit" value="Удалить альбом"/>
+            </form>
 
         </td>
+
         <td style="vertical-align: top;">
             {% for track in tracklist %}
             <ol>{{ forloop.counter }}. {{ track }} {{ track.duration }}</ol>

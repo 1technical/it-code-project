@@ -1,0 +1,15 @@
+{% extends 'discography/base.html' %}
+
+{% block title %}Удаление Альбома{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center">Удаление Альбома</h2>
+
+<form action="{% url 'album_delete' album.slug %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<p>Ты уверен, что хочешь удалить альбом "{{ album.title }}"?</p>
+         <input type="submit" value="Удалить">
+</form>
+
+
+{% endblock %}

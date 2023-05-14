@@ -2,14 +2,7 @@ from django import forms
 from .models import *
 
 
-class ArtistSearch(forms.Form):
-    name = forms.CharField(label='Поиск по артисту', required=False)
-
-
 class CreateArtistForm(forms.ModelForm):
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-
     class Meta:
         model = Artist
         fields = ('name', 'profile', 'photo',)
@@ -24,6 +17,8 @@ class CreateAlbumForm(forms.ModelForm):
         model = Album
         fields = ('artist', 'title', 'year', 'genre', 'photo',)
 
-    tracks = forms.ModelMultipleChoiceField(
-        queryset=Track.objects.all()
-    )
+
+class TracklistForm(forms.ModelForm):
+    class Meta:
+        model = Track
+        fields = '__all__'

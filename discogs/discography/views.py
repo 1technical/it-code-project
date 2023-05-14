@@ -1,9 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from discography import forms
-from discography.forms import CreateArtistForm, CreateAlbumForm, ArtistSearch
+from discography.forms import CreateArtistForm, CreateAlbumForm, TracklistForm
 from discography.models import *
 
 
@@ -11,17 +10,9 @@ class IndexView(ListView):
     model = Artist
     template_name = 'discography/index.html'
 
-    # def get_queryset(self):
-    #     name = self.request.GET.get('name')
-    #     qs = Artist.objects.all()
-    #     if name:
-    #         return qs.filter(name__icontains=name)
-    #     return qs
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Главная Страница'
-        # context['form'] = forms.ArtistSearch()
         return context
 
 
@@ -65,25 +56,45 @@ class AlbumDetailView(ListView):
         context['tracklist'] = Track.objects.filter(album__title=self.slug)
         return context
 
-class ArtistCreate(CreateView):
+class SearchResultView(ListView):
+    model = Artist
+    template_name = 'discography/search_result.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        return Artist.objects.filter(name__icontains=query)
+
+
+class ArtistCreateView(CreateView):
     model = Artist
     form_class = CreateArtistForm
     template_name = 'discography/artist_create.html'
     success_url = reverse_lazy('artist_list')
 
-class AlbumCreate(CreateView):
+class AlbumCreateView(CreateView):
     form_class = CreateAlbumForm
     template_name = 'discography/album_create.html'
     success_url = reverse_lazy('artist_list')
 
-class ArtistUpdate(UpdateView):
+class ArtistUpdateView(UpdateView):
     model = Artist
     form_class = CreateArtistForm
     template_name = 'discography/artist_update.html'
     success_url = reverse_lazy('artist_list')
 
-class AlbumUpdate(UpdateView):
-    model = Artist
+class AlbumUpdateView(UpdateView):
+    model = Album
     form_class = CreateAlbumForm
-    template_name = 'discography/artist_update.html'
+    template_name = 'discography/album_update.html'
+    success_url = reverse_lazy('artist_list')
+
+class AlbumDeleteView(DeleteView):
+    model = Album
+    template_name = 'discography/album_delete.html'
+    success_url = reverse_lazy('artist_list')
+
+class TracklistCreateView(UpdateView):
+    model = Track
+    form_class = TracklistForm
+    template_name = 'discography/tracklist_create.html'
     success_url = reverse_lazy('artist_list')

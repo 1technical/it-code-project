@@ -3,7 +3,7 @@
 {% block title %}Добавить Альбом{% endblock %}
 
 {% block content %}
-<h2 style="text-align:center">Добавление Альбома</h2>
+<h2 style="text-align:center">Добавить Альбом</h2>
 
 <form action="{% url 'album_create' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
