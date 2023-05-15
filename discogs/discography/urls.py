@@ -12,6 +12,6 @@ urlpatterns = [
     path('album_update/<slug:slug>', AlbumUpdateView.as_view(), name='album_update'),
     path('album_delete/<slug:slug>', AlbumDeleteView.as_view(), name='album_delete'),
     path('search_result/', SearchResultView.as_view(), name='search_result'),
-    path('tracklist_create/<int:album_id>', TracklistCreateView.as_view(), name='tracklist_create'),
+    path('tracklist_create/', TracklistCreateView.as_view(), name='tracklist_create'),
 
 ]

@@ -56,6 +56,7 @@ class AlbumDetailView(ListView):
         context['tracklist'] = Track.objects.filter(album__title=self.slug)
         return context
 
+
 class SearchResultView(ListView):
     model = Artist
     template_name = 'discography/search_result.html'
@@ -71,10 +72,12 @@ class ArtistCreateView(CreateView):
     template_name = 'discography/artist_create.html'
     success_url = reverse_lazy('artist_list')
 
+
 class AlbumCreateView(CreateView):
     form_class = CreateAlbumForm
     template_name = 'discography/album_create.html'
     success_url = reverse_lazy('artist_list')
+
 
 class ArtistUpdateView(UpdateView):
     model = Artist
@@ -82,19 +85,25 @@ class ArtistUpdateView(UpdateView):
     template_name = 'discography/artist_update.html'
     success_url = reverse_lazy('artist_list')
 
+
 class AlbumUpdateView(UpdateView):
     model = Album
     form_class = CreateAlbumForm
     template_name = 'discography/album_update.html'
     success_url = reverse_lazy('artist_list')
 
+
 class AlbumDeleteView(DeleteView):
     model = Album
     template_name = 'discography/album_delete.html'
     success_url = reverse_lazy('artist_list')
 
+
 class TracklistCreateView(UpdateView):
-    model = Track
     form_class = TracklistForm
     template_name = 'discography/tracklist_create.html'
     success_url = reverse_lazy('artist_list')
+
+    def get_queryset(self):
+        self.slug = get_object_or_404(Album, slug=self.kwargs["slug"])
+        return Track.objects.filter(album_id__slug=self.slug)
