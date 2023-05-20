@@ -21,4 +21,4 @@ class CreateAlbumForm(forms.ModelForm):
 class TracklistForm(forms.ModelForm):
     class Meta:
         model = Track
-        fields = '__all__'
+        fields = ('artist', 'album', 'track_number', 'title', 'duration', )

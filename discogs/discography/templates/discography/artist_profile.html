@@ -12,12 +12,6 @@
             <form action="{% url 'artist_update' artist.first.slug %}">
                 <input type="submit" value="Обновить профиль"/>
             </form>
-            <!--            <h2 style="text-align:center">Альбомы</h2>-->
-            <!--            {% for album in album_list %}-->
-            <!--            <ul>-->
-            <!--                <a href="{{ album.get_absolute_url }}"><b>{{ album.year }} - {{ album }}</b></a>-->
-            <!--            </ul>-->
-            <!--            {% endfor %}-->
         </td>
     </tr>
     </tbody>
@@ -30,7 +24,9 @@
     <tbody>
     <tr>
         <td><img src="{{ album.photo.url }}" alt="cover" width="85px"></td>
-        <td><a href="{{ album.get_absolute_url }}"><ul><b>{{ album.year }} - {{ album }}</b></ul></a></td>
+        <td><a href="{{ album.get_absolute_url }}">
+            <ul><b>{{ album.year }} - {{ album }}</b></ul>
+        </a></td>
         {% endfor %}
     </tr>
     </tbody>

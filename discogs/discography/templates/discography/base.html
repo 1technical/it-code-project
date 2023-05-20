@@ -6,14 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
 </head>
-<!--<nav class="navbar bg-body-tertiary">-->
-<!--  <div class="container-fluid">-->
-<!--    <a class="navbar-brand" href="#">-->
-<!--      <img src="{% static 'discography/images/vinyl.ico' %}" alt="Logo" width="64" class="d-inline-block align-text-center">-->
-<!--      Music Library-->
-<!--    </a>-->
-<!--  </div>-->
-<!--</nav>-->
 <style>
 
 a {
@@ -44,16 +36,6 @@ article {
   background-color: #dfebe6;
 }
 
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 99%;
-  background-color: #777;
-  padding: 20px;
-  text-align: center;
-  color: white;
-}
-
 </style>
 
 <body style="background: url({% static 'discography/images/background.gif' %}">
@@ -65,10 +47,10 @@ footer {
                                                  alt="icon"></a>
             </td>
             <td style="text-align:left">
-                <h2>Music Library</h2>
+                <h2>Music Catalog</h2>
             </td>
-             <td>
-                 <a href="{% url 'artist_list' %}">Артисты</a>
+            <td>
+                <a href="{% url 'artist_list' %}">Артисты</a>
             </td>
             <td>
                 <a href="{% url 'artist_create' %}">Добавить артиста</a>

@@ -16,7 +16,9 @@
             <form action="{% url 'album_delete' album.first.slug %}">
                 <input type="submit" value="Удалить Альбом"/>
             </form>
-
+            <form action="{% url 'tracklist_create' %}">
+                <input type="submit" value="Обновить треклист"/>
+            </form>
         </td>
 
         <td style="vertical-align: top;">
