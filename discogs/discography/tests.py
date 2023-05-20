@@ -32,6 +32,7 @@ class ArtistTest(TestCase):
         upd_artist = models.Artist.objects.first()
         self.assertListEqual([self.artist.name + 'char', self.artist.profile + 'some text'],
                              [upd_artist.name, upd_artist.profile])
+        self.assertEqual(response.status_code, 200)
 
 
 class AlbumTest(TestCase):
