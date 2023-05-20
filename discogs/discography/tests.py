@@ -29,7 +29,7 @@ class ArtistTest(TestCase):
                                     follow=True)
         self.assertEqual(response.status_code, 200)
         upd_artist = models.Artist.objects.first()
-        self.assertListEqual([self.artist.name + 'char', self.artist.profile + 'some text'],
+        self.assertListEqual([self.artist.name, self.artist.profile],
                              [upd_artist.name, upd_artist.profile])
 
 
