@@ -37,8 +37,9 @@ class TracklistForm(forms.ModelForm):
         model = Track
         fields = ('artist', 'album', 'track_number', 'title', 'duration',)
 
-    def clean_track_number(self):
-        track_number = self.cleaned_data['track_number']
-        if Track.objects.filter(track_number=track_number).exists():
-            raise ValidationError(f"Трек под номером {track_number} уже существует")
-        return track_number
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if Track.objects.filter(title=title).exists():
+            raise ValidationError(f"Трек с именем {title} уже существует")
+        return title
+
