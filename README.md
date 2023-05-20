@@ -10,3 +10,8 @@
 Задание №9
 
 1. Create, update, delete, search формы добавлены в проект
+
+## Django Test
+Задание №10
+
+1. Добавлены тесты views, forms
