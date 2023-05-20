@@ -23,7 +23,7 @@
 
         <td style="vertical-align: top;">
             {% for track in tracklist %}
-            <ol>{{ forloop.counter }}. {{ track }} {{ track.duration }}</ol>
+            <ol>{{ track.track_number }}. {{ track }} {{ track.duration }}</ol>
             {% endfor %}
         </td>
     </tr>

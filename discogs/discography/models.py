@@ -5,7 +5,7 @@ from django.urls import reverse
 from slugify import slugify
 
 class Artist(models.Model):
-    name = models.CharField(max_length=255, verbose_name='Имя')
+    name = models.CharField(max_length=255, unique=True, verbose_name='Имя')
     profile = models.TextField(null=True, blank=True, verbose_name="Профиль")
     photo = models.ImageField(upload_to="artist", default='artist/singer.png', verbose_name="Фото")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")

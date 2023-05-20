@@ -57,6 +57,8 @@ class ArtistCreateView(CreateView):
     form_class = CreateArtistForm
     template_name = 'discography/artist_create.html'
     success_url = reverse_lazy('artist_list')
+    raise_exception = True
+
 
 
 class ArtistUpdateView(UpdateView):
