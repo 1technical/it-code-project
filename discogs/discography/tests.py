@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from discography import models
 from discography import factories
-from discography.models import Artist
+from discography.models import Artist, Album
 
 
 class ArtistTest(TestCase):
@@ -13,6 +13,10 @@ class ArtistTest(TestCase):
     def test_artist_list(self):
         response = self.client.get(reverse('artist_list'))
         self.assertEquals(response.status_code, 200)
+
+    def test_get_absolute_url(self):
+        artist = Artist.objects.create(name='Artist Name')
+        self.assertEquals(artist.get_absolute_url(), '/artist/artist-name/')
 
     def test_artist_detail(self):
         response = self.client.get(reverse('artist_profile', kwargs={'slug': self.artist.slug}))
@@ -44,6 +48,10 @@ class AlbumTest(TestCase):
     def test_album_create(self):
         response = self.client.post(path=reverse("album_create"), args={'slug': self.album.slug}, follow=True)
         self.assertEqual(response.status_code, 200)
+
+    def test_get_absolute_url(self):
+        album = Album.objects.create(title='Album Title', year='1999')
+        self.assertEquals(album.get_absolute_url(), '/album/album-title/')
 
     def test_album_delete(self):
         response = self.client.post(path=reverse("album_delete", args=[self.album.slug]), follow=True)
