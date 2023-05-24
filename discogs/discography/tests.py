@@ -58,16 +58,16 @@ class AlbumTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class CreateArtistFormTests(TestCase):
+class CreateAlbumFormTests(TestCase):
     def setUp(self):
         self.client = Client()
 
     def test_unique_name(self):
-        Artist.objects.create(name='Имя', profile='Профиль1', slug='slug1')
-        artist_count = Artist.objects.count()
-        data = {'name': 'Имя', 'profile': 'Профиль2', 'slug': 'slug2'}
-        response = self.client.post(path=reverse('artist_create'), data=data, follow=True)
-        self.assertEqual(Artist.objects.count(), artist_count)
+        Album.objects.create(title='Название', year='1999')
+        album_count = Album.objects.count()
+        data = {'title': 'Название', 'year': '2000'}
+        response = self.client.post(path=reverse('album_create'), data=data, follow=True)
+        self.assertEqual(Album.objects.count(), album_count)
 
-        self.assertFormError(response, 'form', 'name', 'Артист с именем Имя существует')
+        self.assertFormError(response, 'form', 'title', 'Альбом с названием Название уже существует')
         self.assertEqual(response.status_code, 200)

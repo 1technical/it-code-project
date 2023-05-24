@@ -31,6 +31,7 @@ class Genre(models.Model):
         ("Rock", "Rock"),
         ("Pop", "Popular music"),
         ("Electronic", "Electronic"),
+        ("Experimental", "Experimental"),
     ]
     title = models.CharField(max_length=255, choices=GENRES_CHOICES, verbose_name='Жанр')
 

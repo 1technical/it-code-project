@@ -3,12 +3,13 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block content %}
-<h2 style="text-align:center;">{{ album.first.title}} - {{ album.first.year }}</h2>
+<p class="h1" style="text-align:center;">{{ album.get.title}}</p>
 
 <table>
     <tbody>
     <tr>
-        <td style="vertical-align: top;"><img src="{{ album.first.photo.url }}" alt="cover" height="350px">
+        <td style="vertical-align: top;"><img src="{{ album.first.photo.url }} " class="rounded" alt="cover"
+                                              height="350px">
 
             <form action="{% url 'album_update' album.first.slug %}">
                 <input type="submit" value="Обновить Альбом"/>
@@ -22,6 +23,11 @@
         </td>
 
         <td style="vertical-align: top;">
+            <strong>
+                <ol>Год: {{ album.get.year }}</ol>
+                <ol>Жанр: {% for i in album.get.genre.all %} {{ i }} {% endfor %}</ol>
+            </strong>
+
             {% for track in tracklist %}
             <ol>{{ track.track_number }}. {{ track }} {{ track.duration }}</ol>
             {% endfor %}

@@ -7,7 +7,9 @@
 
 <form action="{% url 'artist_create' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.content.errors }}
+<!--    {{ form.content.errors }}-->
+<!--    {{ form.non_field_errors }}-->
+    {% if form.username.errors %} {{ form.username.errors }} {% endif %}
     <table style="text-align: left;">
         {{form.as_table}}
     </table>

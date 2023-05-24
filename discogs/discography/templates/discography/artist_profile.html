@@ -2,31 +2,36 @@
 {% load static %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<h2 style="text-align:center">{{ artist.first.name}}</h2>
+<p class="h1" style="text-align:center">{{ artist.first.name}}</p>
 <table style="border-spacing: 25px;">
     <tbody>
     <tr>
-        <td style="vertical-align: top;"><img src="{{ artist.first.photo.url }}" alt="artist" height="300px"></td>
+        <td style="vertical-align: top;"><img src="{{ artist.get.photo.url }}" alt="artist" height="300px"></td>
         <td style="vertical-align: top;">
             {{ artist.first.profile|linebreaks }}
-            <form action="{% url 'artist_update' artist.first.slug %}">
+
+            <form action="{% url 'artist_update' artist.get.slug %}">
                 <input type="submit" value="Обновить профиль"/>
             </form>
+
         </td>
     </tr>
     </tbody>
 </table>
 <hr>
-<h1 style="text-align:center">Альбомы</h1>
+<p class="h1" style="text-align:center">Альбомы</p>
 
 {% for album in album_list %}
 <table style="padding-left: 50px;">
     <tbody>
     <tr>
-        <td><img src="{{ album.photo.url }}" alt="cover" width="85px"></td>
+        <td><img src="{{ album.photo.url }}" class="img-thumbnail" alt="cover" width="85px"></td>
         <td><a href="{{ album.get_absolute_url }}">
             <ul><b>{{ album.year }} - {{ album }}</b></ul>
-        </a></td>
+        </a>
+        </td>
+        {% empty %}
+        <td><b>Пока здесь нет альбомов</b></td>
         {% endfor %}
     </tr>
     </tbody>

@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-
-from discography.forms import CreateArtistForm, CreateAlbumForm, TracklistForm
+from discography.forms import CreateArtistForm, CreateAlbumForm, TracklistForm, UpdateAlbumForm, UpdateArtistForm
 from discography.models import *
+from discography.utils import MenuMixin
 
 
-class IndexView(ListView):
+class IndexView(MenuMixin, ListView):
     model = Artist
     template_name = 'discography/index.html'
 
@@ -16,16 +16,20 @@ class IndexView(ListView):
         return context
 
 
-class SearchResultView(ListView):
+class SearchResultView(MenuMixin, ListView):
     model = Artist
     template_name = 'discography/search_result.html'
 
     def get_queryset(self):
         query = self.request.GET.get('query')
-        return Artist.objects.filter(name__icontains=query)
+        if query:
+            object_list = self.model.objects.filter(name__icontains=query)
+        else:
+            object_list = self.model.objects.none()
+        return object_list
 
 
-class ArtistListView(ListView):
+class ArtistListView(MenuMixin, ListView):
     model = Artist
     template_name = 'discography/artist_list.html'
     paginate_by = 7
@@ -36,7 +40,7 @@ class ArtistListView(ListView):
         return context
 
 
-class ArtistProfileView(ListView):
+class ArtistProfileView(MenuMixin, ListView):
     model = Artist
     template_name = 'discography/artist_profile.html'
 
@@ -52,7 +56,7 @@ class ArtistProfileView(ListView):
         return context
 
 
-class ArtistCreateView(CreateView):
+class ArtistCreateView(MenuMixin, CreateView):
     model = Artist
     form_class = CreateArtistForm
     template_name = 'discography/artist_create.html'
@@ -60,15 +64,14 @@ class ArtistCreateView(CreateView):
     raise_exception = True
 
 
-
-class ArtistUpdateView(UpdateView):
+class ArtistUpdateView(MenuMixin, UpdateView):
     model = Artist
-    form_class = CreateArtistForm
+    form_class = UpdateArtistForm
     template_name = 'discography/artist_update.html'
     success_url = reverse_lazy('artist_list')
 
 
-class AlbumDetailView(ListView):
+class AlbumDetailView(MenuMixin, ListView):
     model = Album
     template_name = 'discography/album_detail.html'
 
@@ -84,26 +87,26 @@ class AlbumDetailView(ListView):
         return context
 
 
-class AlbumCreateView(CreateView):
+class AlbumCreateView(MenuMixin, CreateView):
     form_class = CreateAlbumForm
     template_name = 'discography/album_create.html'
     success_url = reverse_lazy('artist_list')
 
 
-class AlbumUpdateView(UpdateView):
+class AlbumUpdateView(MenuMixin, UpdateView):
     model = Album
-    form_class = CreateAlbumForm
+    form_class = UpdateAlbumForm
     template_name = 'discography/album_update.html'
     success_url = reverse_lazy('artist_list')
 
 
-class AlbumDeleteView(DeleteView):
+class AlbumDeleteView(MenuMixin, DeleteView):
     model = Album
     template_name = 'discography/album_delete.html'
     success_url = reverse_lazy('artist_list')
 
 
-class TracklistCreateView(CreateView):
+class TracklistCreateView(MenuMixin, CreateView):
     form_class = TracklistForm
     template_name = 'discography/tracklist_create.html'
     success_url = reverse_lazy('artist_list')
