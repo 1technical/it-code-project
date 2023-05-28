@@ -3,13 +3,17 @@
 {% block title %}Удаление Альбома{% endblock %}
 
 {% block content %}
-<h2 style="text-align:center">Удаление Альбома</h2>
 
+<h2 style="text-align:center">Удаление Альбома</h2>
+<br>
+<div class="container" style="width: 50%">
 <form action="{% url 'album_delete' album.slug %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p>Ты уверен, что хочешь удалить альбом "{{ album.title }}"?</p>
-    <input type="submit" value="Удалить">
-    <button><a href="{% url 'album_detail' album.slug %}">Отменить</a></button>
+    <input class="btn btn-danger btn-sm" type="submit" value="Удалить">
+    <a class="btn btn-primary btn-sm" href="{% url 'album_detail' album.slug %}">Отмена</a>
 </form>
+</div>
+
 
 {% endblock %}

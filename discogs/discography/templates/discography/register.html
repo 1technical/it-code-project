@@ -1,0 +1,51 @@
+{% extends 'discography/base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center">{{title}}</h2>
+
+<!--<div class="form-error">{{ form.non_field_errors }}</div>-->
+<!--<form action="{% url 'register' %}" method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <table>-->
+<!--        {{form.as_table}}-->
+<!--    </table>-->
+<!--    <button type="submit">Регистрация</button>-->
+<!--</form>-->
+
+
+<div class="container" style="width: 50%">
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {{ form.errors }}
+        <div class="form-outline mb-4">
+            <label for="username" class="col-sm-2 col-form-label">Логин</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="username" id="username">
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" name="email" id="email">
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="password1" class="col-sm-2 col-form-label">Пароль</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="password1" id="password1">
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="password2" class="col-sm-2 col-form-label">Повтор Пароля</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="password2" id="password2">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Регистрация</button>
+    </form>
+</div>
+{% endblock %}

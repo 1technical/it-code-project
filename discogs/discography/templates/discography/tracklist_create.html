@@ -3,15 +3,56 @@
 {% block title %}Создать Треклист{% endblock %}
 
 {% block content %}
-<h2 style="text-align:center">Создать Треклист</h2>
+<h2 style="text-align:center">Создать Трек</h2>
 
-<form action="{% url 'tracklist_create' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>
-        {{form.as_table}}
-    </table>
-    <button type="submit">Применить</button>
-</form>
+<!--<form action="{% url 'tracklist_create' %}" method="post" enctype="multipart/form-data">-->
+<!--    {% csrf_token %}-->
+<!--    <table>-->
+<!--        {{form.as_table}}-->
+<!--    </table>-->
+<!--    <button type="submit">Применить</button>-->
+<!--</form>-->
 
+
+<div class="container" style="width: 50%">
+    <form action="{% url 'tracklist_create' %}" method="post">
+        {% csrf_token %}
+        {{ form.errors }}
+        <div class="form-outline mb-4">
+            <label for="artist" class="form-label">Артист</label>
+            <select id="artist" name='artist' class="form-select">
+                {% for i in form.artist %}
+                {{ i }}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="album" class="form-label">Альбом</label>
+            <select id="album" name='album' class="form-select">
+                {% for i in form.album %}
+                {{ i }}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label for="title" class="form-label">Название</label>
+            <input type="title" class="form-control" id="title" name="title"
+                   placeholder="Название">
+        </div>
+
+        <div class="mb-3">
+            <label for="track_number" class="form-label">Номер трека</label>
+            <input type="number" id="track_number" min="1" name="track_number" step="1">
+        </div>
+
+        <div class="form-outline mb-4">
+            <label for="duration" class="form-label">Длина</label>
+            <input type="text" class="form-control" id="duration" name="duration"
+                   placeholder="Например 3:59">
+        </div>
+        <button type="submit" class="btn btn-light">Добавить</button>
+    </form>
+</div>
 
 {% endblock %}

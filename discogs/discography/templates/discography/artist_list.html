@@ -3,7 +3,7 @@
 {% block content %}
 <h2 style="text-align:center">Список Артистов</h2>
 {% if is_paginated %}
-<div class="pagination" >
+<div class="pagination">
           <span class="page-links">
               {% if page_obj.has_previous %}
                   <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">&laquo;пред.</a>
@@ -24,7 +24,7 @@
 <table>
     <tbody>
     <tr>
-        <td><img src="{{ artist.photo.url}}" class="img-thumbnail" alt="artist" width="85px"></td>
+        <td><img src="{{ artist.photo.url}}" class="rounded" alt="artist" width="85px"></td>
         <td><a href="{{ artist.get_absolute_url }}" class="link-dark"/>
             <ul>{{ artist.name }}</ul>
         </td>
@@ -34,6 +34,6 @@
     </tbody>
 </table>
 
-{% endfor %}
 
+{% endfor %}
 {% endblock %}

@@ -1,7 +1,10 @@
-from django.shortcuts import get_object_or_404
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from discography.forms import CreateArtistForm, CreateAlbumForm, TracklistForm, UpdateAlbumForm, UpdateArtistForm
+from discography.forms import CreateArtistForm, CreateAlbumForm, TracklistForm, UpdateAlbumForm, UpdateArtistForm, \
+    LoginUserForm, RegisterUserForm
 from discography.models import *
 from discography.utils import MenuMixin
 
@@ -14,6 +17,40 @@ class IndexView(MenuMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Главная Страница'
         return context
+
+
+class RegisterUser(MenuMixin, CreateView):
+    form_class = RegisterUserForm
+    template_name = 'discography/register.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация'
+        return context
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('index')
+
+
+class LoginUser(MenuMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'discography/login.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Авторизация'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('index')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 
 class SearchResultView(MenuMixin, ListView):
@@ -63,7 +100,6 @@ class ArtistCreateView(MenuMixin, CreateView):
     success_url = reverse_lazy('artist_list')
     raise_exception = True
 
-
 class ArtistUpdateView(MenuMixin, UpdateView):
     model = Artist
     form_class = UpdateArtistForm
@@ -81,11 +117,10 @@ class AlbumDetailView(MenuMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Треклист'
+        context['title'] = 'Альбом'
         context['album'] = Album.objects.filter(title=self.slug)
         context['tracklist'] = Track.objects.filter(album__title=self.slug)
         return context
-
 
 class AlbumCreateView(MenuMixin, CreateView):
     form_class = CreateAlbumForm
@@ -104,7 +139,6 @@ class AlbumDeleteView(MenuMixin, DeleteView):
     model = Album
     template_name = 'discography/album_delete.html'
     success_url = reverse_lazy('artist_list')
-
 
 class TracklistCreateView(MenuMixin, CreateView):
     form_class = TracklistForm

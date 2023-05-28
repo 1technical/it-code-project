@@ -3,12 +3,16 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block content %}
-<p class="h1" style="text-align:center">Что это?<p>
-<p class="lead">Тут можно посмотреть информацию об исполнителях и их альбомах.
-    Добавить артиста, альбом, удалить альбом, работает поиск по имени артиста на латинице (кириллица с
-    ограничением
-    sqlite)
-</p>
-
+<div class="container" style="align: center;">
+    <div class="card text-bg-light mb-3">
+        <div class="card-header"><h4>Что это?</h4></div>
+        <div class="card-body">
+            <p class="card-text">Тут можно посмотреть информацию об исполнителях и их альбомах.
+                Добавить артиста, альбом, удалить альбом, работает поиск по имени артиста на латинице (кириллица с
+                ограничением
+                sqlite)</p>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

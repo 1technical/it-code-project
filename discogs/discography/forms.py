@@ -1,8 +1,20 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
 
 from .models import *
+
+
+class RegisterUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+
+
+class LoginUserForm(AuthenticationForm):
+    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 
 
 class CreateArtistForm(forms.ModelForm):
@@ -10,16 +22,11 @@ class CreateArtistForm(forms.ModelForm):
         model = Artist
         fields = ('name', 'profile', 'photo',)
 
-    widgets = {
-        'profile': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
-    }
-
 
 class UpdateArtistForm(forms.ModelForm):
     class Meta:
         model = Artist
         fields = ('name', 'profile', 'photo',)
-
 
 
 class CreateAlbumForm(forms.ModelForm):

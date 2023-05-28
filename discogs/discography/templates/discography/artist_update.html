@@ -5,13 +5,31 @@
 {% block content %}
 <h2 style="text-align:center">Обновление Профиля</h2>
 
-<form action="{% url 'artist_update' artist.slug %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>
-        {{form.as_table}}
-    </table>
-    <button type="submit">Применить</button>
-</form>
+
+<div class="container" style="width: 50%">
+    <form action="{% url 'artist_update' artist.slug %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.errors }}
+        <div class="form-error">{{ form.non_field_errors }}</div>
+        <div class="form-outline mb-4">
+            <label for="name" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ artist.name }}">
+        </div>
+        <div class="form-outline mb-4">
+            <label for="profile" class="form-label">Профиль</label>
+            <textarea class="form-control" id="profile" rows="7" name="profile">{{ artist.profile }}</textarea>
+        </div>
+
+        <div><img src="{{ artist.photo.url }}" class="img-thumbnail" width="85px" alt="Фото артиста"></div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="photo">Фото</label>
+            <input class="form-control" type="file" name="photo" id="photo" accept=".png,.jpg,.jpeg">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Обновить</button>
+    </form>
+</div>
 
 
 {% endblock %}
