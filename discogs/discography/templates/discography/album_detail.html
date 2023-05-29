@@ -3,23 +3,23 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block content %}
-<p class="h1" style="text-align:center;">{{ album.get.artist }} - {{ album.get.title}}</p>
+<p class="h1" style="text-align:center;">{{ album.first.artist }} - {{ album.first.title}}</p>
 <br>
 <div class="how-section1">
     <div class="row">
         <div class="col-md-3 how-img">
-            <img src="{{ album.get.photo.url }}" class="rounded img-fluid" alt="album"/>
+            <img src="{{ album.first.photo.url }}" class="rounded img-fluid" alt="album"/>
             <table align="center">
                 {% if request.user.is_authenticated %}
                 <tbody>
                 <tr>
                     <td>
-                        <form action="{% url 'album_update' album.get.slug %}">
+                        <form action="{% url 'album_update' album.first.slug %}">
                             <button class="btn btn-light btn-sm" type="submit">Обновить</button>
                         </form>
                     </td>
                     <td>
-                        <form action="{% url 'album_delete' album.get.slug %}">
+                        <form action="{% url 'album_delete' album.first.slug %}">
                             <button class="btn btn-light btn-sm" type="submit">Удалить</button>
                         </form>
                     </td>
@@ -39,10 +39,10 @@
             <table class="table-fixed table-sm">
                 <tbody>
                 <tr>
-                    <td><strong>Год: {{ album.get.year }}</strong></td>
+                    <td><strong>Год: {{ album.first.year }}</strong></td>
                 </tr>
                 <tr>
-                    <td><strong>Жанр: {% for i in album.get.genre.all %} {{ i }} {% endfor %}</strong></td>
+                    <td><strong>Жанр: {% for i in album.first.genre.all %} {{ i }} {% endfor %}</strong></td>
                     </strong>
                 </tr>
                 </tbody>

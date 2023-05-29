@@ -60,7 +60,7 @@ class Album(models.Model):
         return f"{self.title}"
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug = slugify(f'{self.artist}-{self.title}')
         super(Album, self).save(*args, **kwargs)
 
     class Meta:
