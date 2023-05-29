@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import datetime
 from django.urls import reverse
@@ -15,8 +15,11 @@ class Artist(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Artist, self).save(*args, **kwargs)
+        try:
+            self.slug = slugify(self.name)
+            super(Artist, self).save(*args, **kwargs)
+        except IntegrityError:
+            raise ValueError(f"Артист с именем {self.name} уже существует")
 
     def get_absolute_url(self):
         return reverse('artist_profile', args=[self.slug])
@@ -42,7 +45,8 @@ class Genre(models.Model):
 
 class Album(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
-    artist = models.ForeignKey(Artist, max_length=255, null=True, on_delete=models.CASCADE, related_name='albums', verbose_name="Артист")
+    artist = models.ForeignKey(Artist, max_length=255, null=True, on_delete=models.CASCADE, related_name='albums',
+                               verbose_name="Артист")
     photo = models.ImageField(upload_to="album", default='album/vinyl.png', verbose_name="Обложка")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     year = models.PositiveIntegerField(
@@ -68,7 +72,8 @@ class Album(models.Model):
 
 class Track(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE, null=True, related_name='tracks', verbose_name="Альбом")
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, null=True, related_name='tracks', verbose_name="Артист")
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, null=True, related_name='tracks',
+                               verbose_name="Артист")
     track_number = models.PositiveSmallIntegerField(null=True, verbose_name="Номер")
     title = models.CharField(max_length=100, null=True, verbose_name="Название")
     duration = models.CharField(max_length=255, null=True, verbose_name="Длина")

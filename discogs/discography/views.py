@@ -100,6 +100,7 @@ class ArtistCreateView(MenuMixin, CreateView):
     success_url = reverse_lazy('artist_list')
     raise_exception = True
 
+
 class ArtistUpdateView(MenuMixin, UpdateView):
     model = Artist
     form_class = UpdateArtistForm
@@ -122,6 +123,7 @@ class AlbumDetailView(MenuMixin, ListView):
         context['tracklist'] = Track.objects.filter(album__title=self.slug)
         return context
 
+
 class AlbumCreateView(MenuMixin, CreateView):
     form_class = CreateAlbumForm
     template_name = 'discography/album_create.html'
@@ -139,6 +141,7 @@ class AlbumDeleteView(MenuMixin, DeleteView):
     model = Album
     template_name = 'discography/album_delete.html'
     success_url = reverse_lazy('artist_list')
+
 
 class TracklistCreateView(MenuMixin, CreateView):
     form_class = TracklistForm

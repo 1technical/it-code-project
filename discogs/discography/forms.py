@@ -13,14 +13,20 @@ class RegisterUserForm(UserCreationForm):
 
 
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    username = forms.CharField(label='Логин')
+    password = forms.CharField(label='Пароль')
 
 
 class CreateArtistForm(forms.ModelForm):
     class Meta:
         model = Artist
         fields = ('name', 'profile', 'photo',)
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if Artist.objects.filter(name=name.title()).exists():
+            raise ValidationError(f"Артист с именем {name} уже существует")
+        return name
 
 
 class UpdateArtistForm(forms.ModelForm):
@@ -36,7 +42,7 @@ class CreateAlbumForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data['title']
-        if Album.objects.filter(title=title).exists():
+        if Album.objects.filter(title=title.title()).exists():
             raise ValidationError(f"Альбом с названием {title} уже существует")
         return title
 
