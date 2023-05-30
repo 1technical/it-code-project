@@ -25,7 +25,7 @@ class CreateArtistForm(forms.ModelForm):
     def clean_name(self):
         name = self.cleaned_data['name']
         if Artist.objects.filter(name=name.title()).exists():
-            raise ValidationError(f"Артист с именем {name} уже существует")
+            raise ValidationError(f"Артист с именем {name.title()} уже существует")
         return name
 
 
@@ -44,7 +44,7 @@ class CreateAlbumForm(forms.ModelForm):
         title = self.cleaned_data['title']
         artist = self.cleaned_data['artist']
         if Album.objects.filter(title=title.title(), artist=artist).exists():
-            raise ValidationError(f"Альбом с названием {title} уже существует")
+            raise ValidationError(f"Альбом с названием {title.title()} уже существует")
         return title
 
 
@@ -63,5 +63,5 @@ class TracklistForm(forms.ModelForm):
         title = self.cleaned_data['title']
         number = self.cleaned_data['track_number']
         if Track.objects.filter(title=title, track_number=number).exists():
-            raise ValidationError(f"Трек с именем {title} уже существует")
+            raise ValidationError(f"Трек с именем {title.title()} уже существует")
         return title
