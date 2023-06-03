@@ -26,14 +26,14 @@ class Artist(models.Model):
 
 
 class Genre(models.Model):
-    GENRES_CHOICES = [
+    GENRES_CHOICES = (
         ("Jazz", "Jazz"),
         ("Hip Hop", "Hip hop"),
         ("Rock", "Rock"),
         ("Pop", "Popular music"),
         ("Electronic", "Electronic"),
         ("Experimental", "Experimental"),
-    ]
+    )
     title = models.CharField(max_length=255, choices=GENRES_CHOICES, default='Pop', verbose_name='Жанр')
 
     def __str__(self):
@@ -80,3 +80,29 @@ class Track(models.Model):
 
     class Meta:
         ordering = ("track_number",)
+
+
+class Review(models.Model):
+    RATING_RANGE = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+    )
+    album = models.ForeignKey(Album,
+                              on_delete=models.CASCADE,
+                              related_name='reviews')
+    name = models.CharField("Имя", max_length=255)
+    email = models.EmailField("Email")
+    content = models.TextField("Обзор")
+    rating = models.IntegerField("Оценка", choices=RATING_RANGE, default=1)
+    created = models.DateTimeField("Создан", auto_now_add=True)
+    updated = models.DateTimeField("Обновлен", auto_now=True)
+    active = models.BooleanField("Статус", default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return f'Обзор от {self.name} к {self.album}'

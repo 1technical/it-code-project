@@ -32,13 +32,19 @@ class AlbumAdmin(admin.ModelAdmin):
 
 class TrackAdmin(admin.ModelAdmin):
     list_display = ('artist', 'album', 'track_number', 'title', 'duration',)
-    list_display_links = ('album', )
+    list_display_links = ('album',)
     autocomplete_fields = ('album',)
-    ordering = ('album', 'track_number', )
+    ordering = ('album', 'track_number',)
     list_per_page = 15
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'album', 'created', 'active', 'rating',)
+    list_filter = ('active', 'created', 'updated',)
 
 
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Track, TrackAdmin)
 admin.site.register(Genre)
+admin.site.register(Review, CommentAdmin)

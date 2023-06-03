@@ -1,4 +1,5 @@
 from django.urls import path
+
 from discography.views import *
 
 urlpatterns = [
@@ -16,4 +17,5 @@ urlpatterns = [
     path('album_update/<slug:slug>', AlbumUpdateView.as_view(), name='album_update'),
     path('album_delete/<slug:slug>', AlbumDeleteView.as_view(), name='album_delete'),
     path('tracklist_create/', TracklistCreateView.as_view(), name='tracklist_create'),
+    path('<slug:slug>/review', album_review, name='album_review'),
 ]

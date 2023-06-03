@@ -1,12 +1,13 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from discography.forms import CreateArtistForm, CreateAlbumForm, TracklistForm, UpdateAlbumForm, UpdateArtistForm, \
-    LoginUserForm, RegisterUserForm
+    LoginUserForm, RegisterUserForm, ReviewForm
 from discography.models import *
-from discography.utils import MenuMixin
+from discography.utils import MenuMixin, PersonalAcessMixin
 
 
 class IndexView(MenuMixin, ListView):
@@ -93,15 +94,14 @@ class ArtistProfileView(MenuMixin, ListView):
         return context
 
 
-class ArtistCreateView(MenuMixin, CreateView):
+class ArtistCreateView(PersonalAcessMixin, MenuMixin, CreateView):
     model = Artist
     form_class = CreateArtistForm
     template_name = 'discography/artist_create.html'
     success_url = reverse_lazy('artist_list')
-    raise_exception = True
 
 
-class ArtistUpdateView(MenuMixin, UpdateView):
+class ArtistUpdateView(PersonalAcessMixin, MenuMixin, UpdateView):
     model = Artist
     form_class = UpdateArtistForm
     template_name = 'discography/artist_update.html'
@@ -121,29 +121,57 @@ class AlbumDetailView(MenuMixin, ListView):
         context['title'] = 'Альбом'
         context['album'] = Album.objects.filter(title=self.slug)
         context['tracklist'] = Track.objects.filter(album__title=self.slug)
+        context['reviews'] = Review.objects.filter(album=self.slug, active=True)
+        context['form'] = ReviewForm()
         return context
 
 
-class AlbumCreateView(MenuMixin, CreateView):
+class AlbumCreateView(PersonalAcessMixin, MenuMixin, CreateView):
     form_class = CreateAlbumForm
     template_name = 'discography/album_create.html'
     success_url = reverse_lazy('artist_list')
 
 
-class AlbumUpdateView(MenuMixin, UpdateView):
+class AlbumUpdateView(PersonalAcessMixin, MenuMixin, UpdateView):
     model = Album
     form_class = UpdateAlbumForm
     template_name = 'discography/album_update.html'
     success_url = reverse_lazy('artist_list')
 
 
-class AlbumDeleteView(MenuMixin, DeleteView):
+class AlbumDeleteView(PersonalAcessMixin, MenuMixin, DeleteView):
     model = Album
     template_name = 'discography/album_delete.html'
     success_url = reverse_lazy('artist_list')
 
 
-class TracklistCreateView(MenuMixin, CreateView):
+class TracklistCreateView(PersonalAcessMixin, MenuMixin, CreateView):
     form_class = TracklistForm
     template_name = 'discography/tracklist_create.html'
     success_url = reverse_lazy('artist_list')
+
+
+
+@require_POST
+def album_review(request, slug):
+    menu = [
+        {'title': "Артисты", 'url_name': 'artist_list'},
+        {'title': "Добавить Артиста", 'url_name': 'artist_create'},
+        {'title': "Добавить Альбом", 'url_name': 'album_create'},
+    ]
+    user_menu = menu.copy()
+    if not request.user.is_authenticated:
+        user_menu = user_menu[:1]
+    album = get_object_or_404(Album, slug=slug)
+    review = None
+    form = ReviewForm(data=request.POST)
+    if form.is_valid():
+        review = form.save(commit=False)
+        review.album = album
+        review.save()
+    album = Album.objects.filter(slug=slug)
+    return render(request, 'discography/album_review.html',
+                  {'album': album,
+                   'form': form,
+                   'reviews': review,
+                   'menu': user_menu})

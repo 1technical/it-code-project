@@ -7,6 +7,8 @@ from .models import *
 
 
 class RegisterUserForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
@@ -65,3 +67,9 @@ class TracklistForm(forms.ModelForm):
         if Track.objects.filter(title=title, track_number=number).exists():
             raise ValidationError(f"Трек с именем {title.title()} уже существует")
         return title
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ('name', 'email', 'content', 'rating',)

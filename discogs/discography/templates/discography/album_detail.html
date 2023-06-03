@@ -35,7 +35,6 @@
         </div>
 
         <div class="col-md-9">
-
             <table class="table-fixed table-sm">
                 <tbody>
                 <tr>
@@ -66,6 +65,25 @@
 </div>
 <br>
 
+<div class="container" style="width: 75%;">
+    {% for review in reviews %}
+    <div class="align-self-start">
+        <div class="card text-bg-light mb-3">
+            <div class="card-header"><small class="text-muted">#{{ forloop.counter }} от {{ review.name.title }}
+                {{ review.created }} Оценка: {{ review.rating }} баллов</small>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ review.content|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <h2 style="text-align: center;">Комментариев еще нет, напиши - будь первым!</h2>
+    {% endfor %}
+</div>
+
+<br>
+{% include 'discography/includes/review_form.html' %}
 
 {% endblock %}
 

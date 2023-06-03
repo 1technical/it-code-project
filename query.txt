@@ -1,3 +1,0 @@
-In [15]: qs = Track.objects.filter(album_id__slug='black-sabbath')
-In [16]: qs
-Out[16]: <QuerySet [<Track: Black Sabbath>, <Track: The Wizard>, <Track: Behind The Wall Of Sleep>, <Track: N.I.B.>, <Track: Evil Woman, Don't Play Your Games With Me>, <Track: Sleeping Village>, <Track: Warning>]>

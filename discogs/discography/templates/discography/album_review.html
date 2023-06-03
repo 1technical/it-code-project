@@ -1,0 +1,12 @@
+{% extends 'discography/base.html' %}
+
+{% block title %}Добавить Комментарий{% endblock %}
+
+{% block content %}
+{% if reviews %}
+    <h2>Комментарий добавлен</h2>
+    <p><a href="{% url 'album_detail' album.get.slug %}">Вернуться</a></p>
+{% else %}
+{% include 'discography/includes/review_form.html' %}
+{% endif %}
+{% endblock %}

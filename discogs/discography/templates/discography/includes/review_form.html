@@ -1,0 +1,44 @@
+<h3 style="text-align:center">Добавить Комментарий</h3>
+
+<div class="container" style="width: 50%">
+    <form action="{% url 'album_review' album.get.slug %}" method="post">
+        {% csrf_token %}
+        {{ form.error }}
+        {% if request.user.is_authenticated %}
+        <div class="form-outline mb-4">
+            <label for="name" class="form-label"><strong>Имя</strong></label>
+            <input type="text" readonly class="form-control-plaintext" name="name" value={{user.username}}>
+        </div>
+        <div class="form-outline mb-4">
+            <label for="email" class="form-label"><strong>Email</strong></label>
+            <input type="text" readonly class="form-control-plaintext" id="email" name="email" value={{user.email}}>
+        </div>
+        {% else %}
+        <div class="form-outline mb-4">
+            <label for="name" class="form-label"><strong>Имя</strong></label>
+            <input type="text" class="form-control" name="name">
+        </div>
+        <div class="form-outline mb-4">
+            <label for="email" class="form-label"><strong>Email</strong></label>
+            <input type="text" class="form-control" id="email" name="email">
+        </div>
+        {% endif %}
+
+        <div class="form-outline mb-4">
+            <label for="content" class="form-label"><strong>Комментарий</strong></label>
+            <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label for="rating" class="form-label"><strong>Оценка</strong></label>
+            {% for i in form.rating %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="rating" id="rating" value={{forloop.counter}}>
+                <label class="form-check-label" for="rating">{{i}}</label>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Добавить</button>
+    </form>
+</div>
