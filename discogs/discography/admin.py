@@ -19,7 +19,7 @@ class ArtistAdmin(admin.ModelAdmin):
 class AlbumAdmin(admin.ModelAdmin):
     list_display = ('title', 'artist', 'year', 'get_html_photo', 'slug',)
     search_fields = ('title',)
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('artist', 'title',)}
     autocomplete_fields = ('artist',)
     ordering = ('artist', 'year',)
 

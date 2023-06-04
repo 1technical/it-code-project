@@ -7,7 +7,8 @@
 <div class="how-section1">
     <div class="row">
         <div class="col-md-3 how-img">
-            <img src="{{ artist.get.photo.url }}" class="rounded img-fluid"
+            <img src="{% if artist.get.photo %} {{ artist.get.photo.url}} {% else %} {% static 'discography/images/singer.png' %}
+            {% endif %}" class="rounded img-fluid"
                  alt="artist"/>
         </div>
         <div class="col-md-9">
@@ -29,7 +30,8 @@
 <table style="padding-left: 50px;">
     <tbody>
     <tr>
-        <td><img src="{{ album.photo.url }}" class="img-thumbnail" alt="cover" width="85px"></td>
+        <td><img src="{% if album.photo %} {{ album.photo.url}} {% else %} {% static 'discography/images/vinyl.png' %}
+            {% endif %}" class="img-thumbnail" alt="cover" width="85px"></td>
         <td><a href="{{ album.get_absolute_url }}">
             <ul><b>{{ album.year }} - {{ album }}</b></ul>
         </a>

@@ -8,7 +8,7 @@ from slugify import slugify
 class Artist(models.Model):
     name = models.CharField("Имя", max_length=255, unique=True)
     profile = models.TextField("Профиль", blank=True)
-    photo = models.ImageField("Фото", upload_to="artist", default='artist/singer.png')
+    photo = models.ImageField("Фото", upload_to="artist", blank=True)
     slug = models.SlugField("URL", max_length=255, unique=True, null=True)
 
     def __str__(self):
@@ -44,7 +44,7 @@ class Album(models.Model):
     title = models.CharField("Название", max_length=255)
     artist = models.ForeignKey(Artist, max_length=255, null=True, on_delete=models.CASCADE, related_name='albums',
                                verbose_name="Артист")
-    photo = models.ImageField("Обложка", upload_to="album", default='album/vinyl.png')
+    photo = models.ImageField("Обложка", upload_to="album", blank=True)
     slug = models.SlugField("URL", max_length=255, unique=True)
     year = models.PositiveIntegerField(
         validators=[

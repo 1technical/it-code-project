@@ -1,4 +1,6 @@
 {% extends 'discography/base.html' %}
+{% load static %}
+
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
 <h2 style="text-align:center">Список Артистов</h2>
@@ -24,7 +26,11 @@
 <table>
     <tbody>
     <tr>
-        <td><img src="{{ artist.photo.url}}" class="rounded" alt="artist" width="85px"></td>
+        <td><img src="{% if artist.photo %}
+        {{ artist.photo.url}}
+        {% else %}
+        {% static 'discography/images/singer.png' %}
+        {% endif %}" class="rounded" alt="artist" width="85px"></td>
         <td><a href="{{ artist.get_absolute_url }}" class="link-dark"/>
             <ul>{{ artist.name }}</ul>
         </td>

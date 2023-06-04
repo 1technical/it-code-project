@@ -1,4 +1,5 @@
 {% extends 'discography/base.html' %}
+{% load static %}
 
 {% block title %}Обновление Альбома{% endblock %}
 
@@ -40,7 +41,8 @@
             </select>
         </div>
 
-        <div><img src="{{ album.photo.url }}" class="img-thumbnail" width="85px" alt="Обложка"></div>
+        <div><img src="{% if album.photo %} {{ album.photo.url}} {% else %} {% static 'discography/images/vinyl.png' %}
+            {% endif %}" class="img-thumbnail" width="85px" alt="Обложка"></div>
 
 
         <div class="form-outline mb-4">

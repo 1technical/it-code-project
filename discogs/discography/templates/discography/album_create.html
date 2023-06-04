@@ -28,7 +28,7 @@
 
         <div class="form-outline mb-4">
             <label for='artist' class="form-label">Артист</label>
-            <select name='artist' class="form-select">
+            <select name='artist' id="artist" class="form-select">
                 <option>
                     {% for i in form.artist %}
                     {{ i }}
@@ -38,18 +38,18 @@
         </div>
         <div class="form-outline mb-4">
             <label for="title" class="form-label">Название альбома</label>
-            <input type="text" class="form-control" name="title" placeholder="Название Альбома">
+            <input type="text" class="form-control" name="title" id="title" placeholder="Название Альбома">
         </div>
 
         <div class="form-outline mb-3">
             <label for="year" class="form-label">Год Релиза</label>
-            <input type="text" class="form-control" name="year" placeholder="Формат: <ГГГГ>">
+            <input type="text" class="form-control" name="year" id="year" placeholder="Формат: <ГГГГ>">
         </div>
 
 
         <div class="form-outline mb-3">
             <label for="genre" class="form-label">Жанр</label>
-            <select name='genre' class="form-select" multiple>
+            <select name='genre' class="form-select" multiple id="genre">
                 {% for i in form.genre %}
                 {{ i }}
                 {% endfor %}
@@ -58,7 +58,7 @@
 
         <div class="form-outline mb-4">
             <label class="form-label" for="photo">Обложка</label>
-            <input class="form-control" type="file" name="photo" accept=".png,.jpg,.jpeg">
+            <input class="form-control" type="file" name="photo" id="photo" accept=".png,.jpg,.jpeg">
         </div>
 
         <button type="submit" class="btn btn-primary">Добавить</button>

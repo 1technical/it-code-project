@@ -1,4 +1,5 @@
 {% extends 'discography/base.html' %}
+{% load static %}
 
 {% block title %}Редактировать Артиста{% endblock %}
 
@@ -20,7 +21,8 @@
             <textarea class="form-control" id="profile" rows="7" name="profile">{{ artist.profile }}</textarea>
         </div>
 
-        <div><img src="{{ artist.photo.url }}" class="img-thumbnail" width="85px" alt="Фото артиста"></div>
+        <div><img src="{% if artist.photo %} {{ artist.photo.url}} {% else %} {% static 'discography/images/singer.png' %}
+            {% endif %}" class="img-thumbnail" width="85px" alt="Фото артиста"></div>
 
         <div class="form-outline mb-4">
             <label class="form-label" for="photo">Фото</label>

@@ -36,14 +36,14 @@ class RegistrationUser(MenuMixin, CreateView):
         return redirect('index')
 
 
+def password_change_done(request):
+    return render(request, 'discography/password_change_done.html')
+
+
 class PasswordsChangingView(MenuMixin, PersonalAcessMixin, PasswordChangeView):
     form_class = PasswordsChangingForm
     template_name = 'discography/password_change.html'
     success_url = reverse_lazy('password_change_done')
-
-
-def password_change_done(request):
-    return render(request, 'discography/password_change_done.html')
 
 
 class LoginUser(MenuMixin, LoginView):
