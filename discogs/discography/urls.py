@@ -4,9 +4,11 @@ from discography.views import *
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('register/', RegisterUser.as_view(), name='register'),
+    path('registration/', RegistrationUser.as_view(), name='registration'),
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', logout_user, name='logout'),
+    path('password_change/', PasswordsChangingView.as_view(), name='password_change'),
+    path('password_change/done', password_change_done, name='password_change_done'),
     path('artists/', ArtistListView.as_view(), name='artist_list'),
     path('artist_create/', ArtistCreateView.as_view(), name='artist_create'),
     path('artist/<slug:slug>/', ArtistProfileView.as_view(), name='artist_profile'),

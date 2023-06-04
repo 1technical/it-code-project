@@ -1,17 +1,41 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from .models import *
 
 
-class RegisterUserForm(UserCreationForm):
+class RegistrationUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2',)
+
+    def clean_password2(self):
+        data = self.cleaned_data
+        if data['password1'] != data['password2']:
+            raise forms.ValidationError('Пароли не совпадают')
+        return data['password2']
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if User.objects.filter(email=data).exists():
+            raise forms.ValidationError('Email уже сущетвует.')
+        return data
+
+
+class PasswordsChangingForm(PasswordChangeForm):
+    class Meta:
+        model = User
+        fields = ('old_password', 'new_password1', 'new_password2',)
+
+    def clean_new_password2(self):
+        data = self.cleaned_data
+        if data['new_password1'] != data['new_password2']:
+            raise forms.ValidationError('Пароли не совпадают')
+        return data['new_password2']
 
 
 class LoginUserForm(AuthenticationForm):

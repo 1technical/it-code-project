@@ -1,11 +1,11 @@
 from django.contrib.auth import login, logout
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from discography.forms import CreateArtistForm, CreateAlbumForm, TracklistForm, UpdateAlbumForm, UpdateArtistForm, \
-    LoginUserForm, RegisterUserForm, ReviewForm
+    LoginUserForm, RegistrationUserForm, ReviewForm, PasswordsChangingForm
 from discography.models import *
 from discography.utils import MenuMixin, PersonalAcessMixin
 
@@ -20,9 +20,9 @@ class IndexView(MenuMixin, ListView):
         return context
 
 
-class RegisterUser(MenuMixin, CreateView):
-    form_class = RegisterUserForm
-    template_name = 'discography/register.html'
+class RegistrationUser(MenuMixin, CreateView):
+    form_class = RegistrationUserForm
+    template_name = 'discography/registration.html'
     success_url = reverse_lazy('login')
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -34,6 +34,16 @@ class RegisterUser(MenuMixin, CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('index')
+
+
+class PasswordsChangingView(MenuMixin, PersonalAcessMixin, PasswordChangeView):
+    form_class = PasswordsChangingForm
+    template_name = 'discography/password_change.html'
+    success_url = reverse_lazy('password_change_done')
+
+
+def password_change_done(request):
+    return render(request, 'discography/password_change_done.html')
 
 
 class LoginUser(MenuMixin, LoginView):
@@ -149,7 +159,6 @@ class TracklistCreateView(PersonalAcessMixin, MenuMixin, CreateView):
     form_class = TracklistForm
     template_name = 'discography/tracklist_create.html'
     success_url = reverse_lazy('artist_list')
-
 
 
 @require_POST
