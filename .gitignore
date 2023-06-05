@@ -131,5 +131,5 @@ dmypy.json
 .pyre/
 
 # Media folder
-/media/album/
-/media/artist/
+discogs/media/album/
+discogs/media/artist/
