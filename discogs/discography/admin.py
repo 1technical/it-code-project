@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 
 from discography.models import *
 
-
+@admin.register(Artist)
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'get_html_photo',)
     search_fields = ('name',)
@@ -15,7 +15,7 @@ class ArtistAdmin(admin.ModelAdmin):
 
     get_html_photo.short_description = "Фото Артиста"
 
-
+@admin.register(Album)
 class AlbumAdmin(admin.ModelAdmin):
     list_display = ('title', 'artist', 'year', 'get_html_photo', 'slug',)
     search_fields = ('title',)
@@ -29,7 +29,7 @@ class AlbumAdmin(admin.ModelAdmin):
 
     get_html_photo.short_description = "Обложка"
 
-
+@admin.register(Track)
 class TrackAdmin(admin.ModelAdmin):
     list_display = ('artist', 'album', 'track_number', 'title', 'duration',)
     list_display_links = ('album',)
@@ -37,14 +37,8 @@ class TrackAdmin(admin.ModelAdmin):
     ordering = ('album', 'track_number',)
     list_per_page = 15
 
-
+@admin.register(Review)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'album', 'created', 'active', 'rating',)
     list_filter = ('active', 'created', 'updated',)
 
-
-admin.site.register(Artist, ArtistAdmin)
-admin.site.register(Album, AlbumAdmin)
-admin.site.register(Track, TrackAdmin)
-admin.site.register(Genre)
-admin.site.register(Review, CommentAdmin)
