@@ -66,13 +66,6 @@ class CreateAlbumForm(forms.ModelForm):
         model = Album
         fields = ('artist', 'title', 'year', 'genre', 'photo',)
 
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        artist = self.cleaned_data['artist']
-        if Album.objects.filter(title=title.title(), artist=artist).exists():
-            raise ValidationError(f"Альбом с названием {title.title()} уже существует")
-        return title
-
 
 class UpdateAlbumForm(forms.ModelForm):
     class Meta:

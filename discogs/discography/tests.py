@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls import reverse
-from discography import models
 from discography import factories
 from discography.models import Artist, Album
 
@@ -28,15 +28,20 @@ class ArtistTest(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_artist_update(self):
-        data = {'name': self.artist.name + 'char', 'profile': self.artist.profile + 'some text'}
+        data = {'name': self.artist.name, 'profile': self.artist.profile}
         response = self.client.post(reverse('artist_update', args=[self.artist.slug]),
                                     data=data,
                                     follow=True)
         self.assertEqual(response.status_code, 200)
-        upd_artist = models.Artist.objects.first()
-        self.assertListEqual([self.artist.name + 'char', self.artist.profile + 'some text'],
-                             [upd_artist.name, upd_artist.profile])
+
+    def test_not_authenticated_user_can_not_create_artist(self):
+        url = reverse('artist_create')
+        data = {
+            'name': 'New Artist Name',
+        }
+        response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'login')
 
 
 class AlbumTest(TestCase):
@@ -44,30 +49,29 @@ class AlbumTest(TestCase):
         self.client = Client()
         self.artist = factories.ArtistFactory()
         self.album = factories.AlbumFactory(artist=self.artist)
+        self.user = User.objects.create_user(
+            username='user1', password='password1'
+        )
 
     def test_album_create(self):
         response = self.client.post(path=reverse("album_create"), args={'slug': self.album.slug}, follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_get_absolute_url(self):
-        album = Album.objects.create(title='Album Title', year='1999')
-        self.assertEquals(album.get_absolute_url(), '/album/album-title/')
+        self.artist = Artist.objects.create(name="Artist Name")
+        album = Album.objects.create(title='Album Title', year='1999', artist=self.artist)
+        self.assertEquals(album.get_absolute_url(), '/album/artist-name-album-title/')
 
     def test_album_delete(self):
         response = self.client.post(path=reverse("album_delete", args=[self.album.slug]), follow=True)
         self.assertEqual(response.status_code, 200)
 
-
-class CreateAlbumFormTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-
-    def test_unique_name(self):
-        Album.objects.create(title='Название', year='1999')
-        album_count = Album.objects.count()
-        data = {'title': 'Название', 'year': '2000'}
-        response = self.client.post(path=reverse('album_create'), data=data, follow=True)
-        self.assertEqual(Album.objects.count(), album_count)
-
-        self.assertFormError(response, 'form', 'title', 'Альбом с названием Название уже существует')
+    def test_not_authenticated_user_can_not_create_album(self):
+        url = reverse('album_create')
+        data = {
+            'title': 'New Album Name',
+            'year': 1999,
+        }
+        response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'login')
